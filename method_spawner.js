@@ -13,7 +13,7 @@ var method_spawner = {
         var maxSoldierMelee = 0;    // SoldierMelees will punch and tank the shit out of badguys.
         var maxSoldierRanged = 0;   // SoldierRangeds will shoot the shit out of badguys.
         
-        var isConstructionTargetExist = Game.rooms["W7S23"].find(FIND_CONSTRUCTION_SITES).length > 0;
+        var isConstructionTargetExist = Game.spawns["Spawn1"].room.find(FIND_CONSTRUCTION_SITES).length > 0;
         var hostiles = Game.spawns["Spawn1"].room.find(FIND_HOSTILE_CREEPS, {filter: (creeps) => {return ((creeps.owner.username != "Brokndremes") || (creeps.owner.username != "DickFuckPussySuck"))}});
         
         /* 
@@ -44,19 +44,19 @@ var method_spawner = {
         var harvesterModules =      [WORK, WORK, WORK, WORK, WORK,
                                      CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY,
                                      MOVE, MOVE, MOVE, MOVE, MOVE, MOVE];
-        var harvesterBasicModules = [WORK, WORK,
+        var harvesterBasicModules = [WORK,
                                      CARRY, CARRY, CARRY,
                                      MOVE];
         var upgraderModules =       [WORK, WORK, WORK, WORK, WORK,
                                      CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY,
                                      MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE];
-        var upgraderBasicModules =  [WORK,
+        var upgraderBasicModules =  [WORK, WORK,
                                      CARRY,
                                      MOVE];
         var builderModules =        [WORK, WORK, WORK, WORK, WORK,
                                      CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY,
                                      MOVE, MOVE, MOVE, MOVE];
-        var builderBasicModules =   [WORK, CARRY, MOVE];
+        var builderBasicModules =   [WORK, CARRY, CARRY, CARRY, MOVE];
         var supplierModules =       [WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE];
         var supplierBasicModules =  [CARRY, CARRY, CARRY, MOVE, MOVE, MOVE];
         var soldierMeleeModules =   [TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH,
@@ -74,45 +74,47 @@ var method_spawner = {
         var soldierRangedCount  = _.filter(Game.creeps, (creep) => creep.memory.role == "SolderRanged").length;
         var totalCount          = harvesterCount + upgraderCount + builderCount + supplierCount + soldierMeleeCount + soldierRangedCount;
         
-        /* Build and name each Creep as necessary */
-        if(utility.canSpawnCreep(harvesterCount, maxHarvesters, harvesterModules)) {
-            Game.spawns['Spawn1'].spawnCreep(harvesterModules, 'Harvester'+(Math.floor(Math.random() * maxHarvesters)), {memory: {role: 'Harvester', storageFull: false}});
-        }
-        
-        else if(utility.canSpawnCreep(harvesterCount, maxHarvesters/2, harvesterBasicModules)) {
-            Game.spawns['Spawn1'].spawnCreep(harvesterBasicModules, 'Harvester'+(Math.floor(Math.random() * maxHarvesters)), {memory: {role: 'Harvester', storageFull: false}});
-        }
-        
-        else if(utility.canSpawnCreep(upgraderCount, maxUpgraders, upgraderModules)) {
-            Game.spawns['Spawn1'].spawnCreep(upgraderModules, 'Upgrader'+(Math.floor(Math.random() * maxUpgraders)), {memory: {role: 'Upgrader', storageFull: false}});
-        }
-        
-        /* else if(utility.canSpawnCreep(upgraderCount, maxUpgraders/2, upgraderBasicModules)) {
-            Game.spawns['Spawn1'].spawnCreep(upgraderBasicModules, 'Upgrader'+(Math.floor(Math.random() * Math.floor(maxUpgraders))), {memory: {role: 'Upgrader', storageFull: false}});
-        } */
+        for(var name in Game.spawns) {
+            /* Build and name each Creep as necessary */
+            if(utility.canSpawnCreep(harvesterCount, maxHarvesters, harvesterModules)) {
+                Game.spawns[name].spawnCreep(harvesterModules, 'Harvester'+(Math.floor(Math.random() * maxHarvesters)), {memory: {role: 'Harvester', storageFull: false}});
+            }
             
-        else if(utility.canSpawnCreep(builderCount, maxBuilders, builderModules)){
-            Game.spawns['Spawn1'].spawnCreep(builderModules, 'Builder'+(Math.floor(Math.random() * maxBuilders)), {memory: {role: 'Builder', storageFull: false}});
-        }
-        
-        else if(utility.canSpawnCreep(builderCount, maxBuilders/2, builderBasicModules)) {
-            Game.spawns['Spawn1'].spawnCreep(builderBasicModules, 'Builder'+(Math.floor(Math.random() * maxBuilders)), {memory: {role: 'Builder', storageFull: false}});
-        }
-        
-        else if(utility.canSpawnCreep(supplierCount, maxSuppliers, supplierModules)) {
-            Game.spawns['Spawn1'].spawnCreep(supplierModules, 'Supplier'+(Math.floor(Math.random() * maxSuppliers)), {memory: {role: 'Supplier', storageFull: false}});
-        }
-        
-        else if(utility.canSpawnCreep(supplierCount, maxSuppliers/2, supplierBasicModules)) {
-            Game.spawns['Spawn1'].spawnCreep(supplierBasicModules, 'Supplier'+(Math.floor(Math.random() * maxSuppliers)), {memory: {role: 'Supplier', storageFull: false}});
-        }
-        
-        else if(utility.canSpawnCreep(soldierMeleeCount, maxSoldierMelee, soldierMeleeModules) && (hostiles.length > 0)) {
-            Game.spawns['Spawn1'].spawnCreep(soldierMeleeModules, 'Brawler'+(Math.floor(Math.random() * maxSoldierMelee)), {memory: {role: 'SoldierMelee'}});
-        }
-        
-        else if(utility.canSpawnCreep(soldierRangedCount, maxSoldierRanged, soldierRangedModules) && (hostiles.length > 0)) {
-            Game.spawns['Spawn1'].spawnCreep(soldierRangedModules, 'Ranger'+(Math.floor(Math.random() * maxSoldierRanged)), {memory: {role: 'SoldierRanged'}});
+            else if(utility.canSpawnCreep(harvesterCount, maxHarvesters/2, harvesterBasicModules)) {
+                Game.spawns[name].spawnCreep(harvesterBasicModules, 'Harvester'+(Math.floor(Math.random() * maxHarvesters)), {memory: {role: 'Harvester', storageFull: false}});
+            }
+            
+            else if(utility.canSpawnCreep(upgraderCount, maxUpgraders, upgraderModules)) {
+                Game.spawns[name].spawnCreep(upgraderModules, 'Upgrader'+(Math.floor(Math.random() * maxUpgraders)), {memory: {role: 'Upgrader', storageFull: false}});
+            }
+            
+            else if(utility.canSpawnCreep(upgraderCount, maxUpgraders/2, upgraderBasicModules)) {
+                Game.spawns[name].spawnCreep(upgraderBasicModules, 'Upgrader'+(Math.floor(Math.random() * Math.floor(maxUpgraders))), {memory: {role: 'Upgrader', storageFull: false}});
+            }
+                
+            else if((utility.canSpawnCreep(builderCount, maxBuilders, builderModules)) && (isConstructionTargetExist)){
+                Game.spawns[name].spawnCreep(builderModules, 'Builder'+(Math.floor(Math.random() * maxBuilders)), {memory: {role: 'Builder', storageFull: false}});
+            }
+            
+            else if((utility.canSpawnCreep(builderCount, maxBuilders/2, builderBasicModules)) && (isConstructionTargetExist)) {
+                Game.spawns[name].spawnCreep(builderBasicModules, 'Builder'+(Math.floor(Math.random() * maxBuilders)), {memory: {role: 'Builder', storageFull: false}});
+            }
+            
+            else if(utility.canSpawnCreep(supplierCount, maxSuppliers, supplierModules) && (Game.spawns["Spawn1"].room.storage)) {
+                Game.spawns[name].spawnCreep(supplierModules, 'Supplier'+(Math.floor(Math.random() * maxSuppliers)), {memory: {role: 'Supplier', storageFull: false}});
+            }
+            
+            else if(utility.canSpawnCreep(supplierCount, maxSuppliers/2, supplierBasicModules)) {
+                Game.spawns[name].spawnCreep(supplierBasicModules, 'Supplier'+(Math.floor(Math.random() * maxSuppliers)), {memory: {role: 'Supplier', storageFull: false}});
+            }
+            
+            else if(utility.canSpawnCreep(soldierMeleeCount, maxSoldierMelee, soldierMeleeModules) && (hostiles.length > 0)) {
+                Game.spawns[name].spawnCreep(soldierMeleeModules, 'Brawler'+(Math.floor(Math.random() * maxSoldierMelee)), {memory: {role: 'SoldierMelee'}});
+            }
+            
+            else if(utility.canSpawnCreep(soldierRangedCount, maxSoldierRanged, soldierRangedModules) && (hostiles.length > 0)) {
+                Game.spawns[name].spawnCreep(soldierRangedModules, 'Ranger'+(Math.floor(Math.random() * maxSoldierRanged)), {memory: {role: 'SoldierRanged'}});
+            }
         }
         
         console.log("exit spawner");

@@ -10,5 +10,4 @@ module.exports.loop = function () {
         Game.cpu.generatePixel();
     }
 	console.log("exit main");
-	console.log("Pull test");
 }

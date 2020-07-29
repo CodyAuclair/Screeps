@@ -31,7 +31,7 @@ var roleBuilder = require('roleBuilder');
 var roleUpgrader = require('roleUpgrader');
 
 var roleHarvesterAway = {
-    
+
 }
 
 module.exports = roleHarvesterAway;

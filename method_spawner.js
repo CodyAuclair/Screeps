@@ -7,7 +7,7 @@ var method_spawner = {
         console.log("entered spawner");
         /* Number of Each Worker Type to Have at Once */
         var maxHarvesters = 2;      // Harvesters are useful for mining energy nodes and supply that energy to spawners, extensions, or storages.
-        var maxUpgraders = 2;       // Upgraders will upgrade the room controller of the room they reside in.
+        var maxUpgraders = 1;       // Upgraders will upgrade the room controller of the room they reside in.
         var maxBuilders = 2;        // Builders will construct any construction sites in the room they reside in.
         var maxSuppliers = 1;       // Suppliers will retrieve energy from storage structures and trasfer them to towers, then extensions, then act as slow harvesters.
         var maxSoldierMelee = 0;    // SoldierMelees will punch and tank the shit out of badguys.
@@ -42,22 +42,22 @@ var method_spawner = {
         /* The first modules are the first to break in an attack */
         /* Limit of 50 parts on any single creep. */
         var harvesterModules =      [WORK, WORK, WORK, WORK, WORK,
-                                     CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY,
+                                     CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY,
                                      MOVE, MOVE, MOVE, MOVE, MOVE, MOVE];
         var harvesterBasicModules = [WORK,
                                      CARRY, CARRY, CARRY,
                                      MOVE];
-        var upgraderModules =       [WORK, WORK, WORK, WORK, WORK,
-                                     CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY,
-                                     MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE];
+        var upgraderModules =       [WORK, WORK,
+                                     CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY,
+                                     MOVE, MOVE, MOVE, MOVE, MOVE];
         var upgraderBasicModules =  [WORK, WORK,
                                      CARRY,
                                      MOVE];
-        var builderModules =        [WORK, WORK, WORK, WORK, WORK,
-                                     CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY,
+        var builderModules =        [WORK, WORK, WORK,
+                                     CARRY, CARRY, CARRY, CARRY, CARRY,
                                      MOVE, MOVE, MOVE, MOVE];
         var builderBasicModules =   [WORK, CARRY, CARRY, CARRY, MOVE];
-        var supplierModules =       [WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE];
+        var supplierModules =       [WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE];
         var supplierBasicModules =  [CARRY, CARRY, CARRY, MOVE, MOVE, MOVE];
         var soldierMeleeModules =   [TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH,
                                      TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH,

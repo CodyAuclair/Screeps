@@ -26,7 +26,8 @@ var roleSupplier = {
 		var towersPartialFill = creep.room.find(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_TOWER) && structure.energy <= .75*structure.energyCapacity} } );
 		var extension = creep.pos.findClosestByPath(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_EXTENSION) && structure.energy < structure.energyCapacity} } );
 		
-		var energyOnGround = creep.pos.findClosestByPath(FIND_DROPPED_RESOURCES, {filter: (resource) => {return (resource.resourceType == RESOURCE_ENERGY)}});
+		// changed here
+		var energyOnGround = creep.pos.findClosestByPath(FIND_DROPPED_RESOURCES, {filter: (resource) => {return ((resource.resourceType == RESOURCE_ENERGY) && (resource.amount >= 100))}});
 		
 		if((creep.store.getUsedCapacity < .8*creep.store.getCapacity) && (energyOnGround != null)) {
 		    if(creep.store.getUsedCapacity < storageTarget.store.getFreeCapacity) {

@@ -20,10 +20,12 @@
 */
 
 var mineUntilFull = require('method_mineUntilFull');
+var setStorageFullFlag = require('method_setStorageFullFlag');
+
+var utility = require('utils');
 
 var roleUpgrader = {
-	run: function(creep) {
-	    console.log("entered roleUpgrader");
+	run: function(creep) {     
 
         var sources = creep.room.find(FIND_SOURCES);
 		var controllerTarget = creep.room.controller;

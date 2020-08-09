@@ -18,15 +18,15 @@ var roleTower = {
                                                                                                             structure.structureType == STRUCTURE_CONTAINER || structure.structureType == STRUCTURE_EXTENSION ||
                                                                                                             structure.structureType == STRUCTURE_RAMPART) && structure.hits < .2*structure.hitsMax} } );
         
-        var repairTargets = Game.spawns['Spawn1'].room.find(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_ROAD || structure.structureType == STRUCTURE_SPAWN || 
-                                                                                                            structure.structureType == STRUCTURE_CONTAINER || structure.structureType == STRUCTURE_EXTENSION)
-                                                                                                            && structure.hits < .8*structure.hitsMax} } );
+        // var repairTargets = Game.spawns['Spawn1'].room.find(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_ROAD || structure.structureType == STRUCTURE_SPAWN || 
+        //                                                                                                     structure.structureType == STRUCTURE_CONTAINER || structure.structureType == STRUCTURE_EXTENSION)
+        //                                                                                                     && structure.hits < .8*structure.hitsMax} } );
         
-        var repairWalls = Game.spawns['Spawn1'].room.find(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_WALL || structure.structureType == STRUCTURE_RAMPART)
-                                                                                                                && structure.hits < 1000000 /* .001*structure.hitsMax */} } );
+        // var repairWalls = Game.spawns['Spawn1'].room.find(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_WALL || structure.structureType == STRUCTURE_RAMPART)
+        //                                                                                                         && structure.hits < 1000000 /* .001*structure.hitsMax */} } );
         
         // var arrayTest = repairWalls;
-        // var result = utility.sortByLowestHits(arrayTest);
+        // var result = utility.getLowestHitsInArray(arrayTest);
         // console.log(result + " " + result.hits);
         
         if (hostiles.length > 0) {
@@ -34,18 +34,18 @@ var roleTower = {
             tower.attack(hostiles[0]);
         } else if((emergencyRepair.length > 0) && (tower.store.getUsedCapacity(RESOURCE_ENERGY) > 600)) {
             console.log("Entered Emergency Repair with tower energy at: " + tower.store.getUsedCapacity(RESOURCE_ENERGY));
-            console.log("Lowest health emergencyRepair: " + utility.sortByLowestHits(emergencyRepair) + "\nHits: " + utility.sortByLowestHits(emergencyRepair).hits);
-            tower.repair(utility.sortByLowestHits(emergencyRepair));
-        } else if((repairTargets.length > 0) && (tower.store.getUsedCapacity(RESOURCE_ENERGY) > 600)) {
+            console.log("Lowest health emergencyRepair: " + utility.getLowestHitsInArray(emergencyRepair) + "\nHits: " + utility.getLowestHitsInArray(emergencyRepair).hits);
+            tower.repair(utility.getLowestHitsInArray(emergencyRepair));
+        } /* else if((repairTargets.length > 0) && (tower.store.getUsedCapacity(RESOURCE_ENERGY) > 600)) {
             console.log("Entered Standard Repair with tower energy at: " + tower.store.getUsedCapacity(RESOURCE_ENERGY));
-            console.log("Lowest health repairTargets: " + utility.sortByLowestHits(repairTargets) + "\nHits: " + utility.sortByLowestHits(repairTargets).hits);
-            tower.repair(utility.sortByLowestHits(repairTargets));
+            console.log("Lowest health repairTargets: " + utility.getLowestHitsInArray(repairTargets) + "\nHits: " + utility.getLowestHitsInArray(repairTargets).hits);
+            tower.repair(utility.getLowestHitsInArray(repairTargets));
         } else if((repairWalls.length > 0) && (tower.store.getUsedCapacity(RESOURCE_ENERGY) > 600)) {
             console.log("Entered Wall Repair with tower energy at: " + tower.store.getUsedCapacity(RESOURCE_ENERGY));
-            console.log("Lowest health repairWalls: " + utility.sortByLowestHits(repairWalls) + "\nHits: " + utility.sortByLowestHits(repairWalls).hits);
-            // var lowestHealthTarget = utility.sortByLowestHits(repairWalls);
-            tower.repair(utility.sortByLowestHits(repairWalls));
-        } 
+            console.log("Lowest health repairWalls: " + utility.getLowestHitsInArray(repairWalls) + "\nHits: " + utility.getLowestHitsInArray(repairWalls).hits);
+            // var lowestHealthTarget = utility.getLowestHitsInArray(repairWalls);
+            tower.repair(utility.getLowestHitsInArray(repairWalls));
+        } */
         
         console.log("Exit roleTower");
     }

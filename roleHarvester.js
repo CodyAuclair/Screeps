@@ -29,9 +29,6 @@ var deliverToSpawn = require('method_deliverToSpawn');
 var deliverToExtension = require('method_deliverToExtension');
 var deliverToStorage = require('method_deliverToStorage');
 var deliverToTower = require('method_deliverToTower');
-var setStorageFullFlag = require('method_setStorageFullFlag');
-
-var utility = require('utils');
 
 var roleBuilder = require('roleBuilder');
 var roleUpgrader = require('roleUpgrader');

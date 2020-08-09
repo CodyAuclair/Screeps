@@ -7,8 +7,9 @@ var method_spawner = {
         console.log("entered spawner");
         /* Number of Each Worker Type to Have at Once */
         var maxHarvesters = 2;      // Harvesters are useful for mining energy nodes and supply that energy to spawners, extensions, or storages.
-        var maxUpgraders = 1;       // Upgraders will upgrade the room controller of the room they reside in.
+        var maxUpgraders = 2;       // Upgraders will upgrade the room controller of the room they reside in.
         var maxBuilders = 2;        // Builders will construct any construction sites in the room they reside in.
+        var maxRepairers = 2;       // Repairers will roam around and repair the lowest hit structures.
         var maxSuppliers = 1;       // Suppliers will retrieve energy from storage structures and trasfer them to towers, then extensions, then act as slow harvesters.
         var maxSoldierMelee = 0;    // SoldierMelees will punch and tank the shit out of badguys.
         var maxSoldierRanged = 0;   // SoldierRangeds will shoot the shit out of badguys.
@@ -42,22 +43,25 @@ var method_spawner = {
         /* The first modules are the first to break in an attack */
         /* Limit of 50 parts on any single creep. */
         var harvesterModules =      [WORK, WORK, WORK, WORK, WORK,
-                                     CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY,
+                                     CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY,
                                      MOVE, MOVE, MOVE, MOVE, MOVE, MOVE];
         var harvesterBasicModules = [WORK,
                                      CARRY, CARRY, CARRY,
                                      MOVE];
-        var upgraderModules =       [WORK, WORK,
-                                     CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY,
-                                     MOVE, MOVE, MOVE, MOVE, MOVE];
+        var upgraderModules =       [WORK, WORK, WORK, WORK, WORK,
+                                     CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY,
+                                     MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE];
         var upgraderBasicModules =  [WORK, WORK,
                                      CARRY,
                                      MOVE];
-        var builderModules =        [WORK, WORK, WORK,
-                                     CARRY, CARRY, CARRY, CARRY, CARRY,
+        var builderModules =        [WORK, WORK, WORK, WORK, WORK,
+                                     CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY,
                                      MOVE, MOVE, MOVE, MOVE];
         var builderBasicModules =   [WORK, CARRY, CARRY, CARRY, MOVE];
-        var supplierModules =       [WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE];
+        var repairerModules =       [WORK, WORK, WORK,
+                                     CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY,
+                                     MOVE, MOVE, MOVE, MOVE, MOVE];
+        var supplierModules =       [WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE];
         var supplierBasicModules =  [CARRY, CARRY, CARRY, MOVE, MOVE, MOVE];
         var soldierMeleeModules =   [TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH,
                                      TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH,
@@ -69,18 +73,19 @@ var method_spawner = {
         var harvesterCount      = _.filter(Game.creeps, (creep) => creep.memory.role == "Harvester").length;
         var upgraderCount       = _.filter(Game.creeps, (creep) => creep.memory.role == "Upgrader").length;
         var builderCount        = _.filter(Game.creeps, (creep) => creep.memory.role == "Builder").length;
+        var repairerCount       = _.filter(Game.creeps, (creep) => creep.memory.role == "Repairer").length;
         var supplierCount       = _.filter(Game.creeps, (creep) => creep.memory.role == "Supplier").length;
         var soldierMeleeCount   = _.filter(Game.creeps, (creep) => creep.memory.role == "SoldierMelee").length;
         var soldierRangedCount  = _.filter(Game.creeps, (creep) => creep.memory.role == "SolderRanged").length;
         var totalCount          = harvesterCount + upgraderCount + builderCount + supplierCount + soldierMeleeCount + soldierRangedCount;
-        
+
         for(var name in Game.spawns) {
             /* Build and name each Creep as necessary */
             if(utility.canSpawnCreep(harvesterCount, maxHarvesters, harvesterModules)) {
                 Game.spawns[name].spawnCreep(harvesterModules, 'Harvester'+(Math.floor(Math.random() * maxHarvesters)), {memory: {role: 'Harvester', storageFull: false}});
             }
             
-            else if(utility.canSpawnCreep(harvesterCount, harvesterCount/2, harvesterBasicModules)) {
+            else if(utility.canSpawnCreep(harvesterCount, maxHarvesters/2, harvesterBasicModules)) {
                 Game.spawns[name].spawnCreep(harvesterBasicModules, 'Harvester'+(Math.floor(Math.random() * maxHarvesters)), {memory: {role: 'Harvester', storageFull: false}});
             }
             
@@ -98,6 +103,10 @@ var method_spawner = {
             
             else if((utility.canSpawnCreep(builderCount, maxBuilders/2, builderBasicModules)) && (isConstructionTargetExist)) {
                 Game.spawns[name].spawnCreep(builderBasicModules, 'Builder'+(Math.floor(Math.random() * maxBuilders)), {memory: {role: 'Builder', storageFull: false}});
+            }
+
+            else if(utility.canSpawnCreep(repairerCount, maxRepairers, repairerModules)) {
+                Game.spawns[name].spawnCreep(repairerModules, 'Repairer'+(Math.floor(Math.random() * maxSuppliers)), {memory: {role: 'Repairer', storageFull: false}});
             }
             
             else if(utility.canSpawnCreep(supplierCount, maxSuppliers, supplierModules) && (Game.spawns["Spawn1"].room.storage)) {

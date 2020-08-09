@@ -7,7 +7,6 @@
  * mod.thing == 'a thing'; // true
  */
  
-var roleHarvester = require('roleHarvester');
 var roleUpgrader = require('roleUpgrader');
 var roleBuilder = require('roleBuilder');
 var deliverToExtension = require('method_deliverToExtension');

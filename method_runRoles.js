@@ -21,6 +21,7 @@ var roleSoldierRanged = require('roleSoldierRanged');
 var roleTower = require('roleTower');
 
 var setStorageFlagFull = require('method_setStorageFullFlag');
+var roleRepairer = require('roleRepairer');
 
 var method_runRoles = {
 	run: function() {
@@ -46,6 +47,10 @@ var method_runRoles = {
 			
 			if(creep.memory.role == 'Builder') {
 			    roleBuilder.run(creep);
+			}
+
+			if(creep.memory.role == 'Repairer') {
+				roleRepairer.run(creep);
 			}
 			
 			if(creep.memory.role == 'SoldierMelee') {

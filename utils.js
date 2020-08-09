@@ -4,7 +4,7 @@ var utils = {
     
     // =================== START SORTING FUNCTIONS ===================
     
-    sortByLowestHits: function(arrayToSort) {
+    getLowestHitsInArray: function(arrayToSort) {
         var lowestHits = arrayToSort[0];
         for(var i = 1; i < arrayToSort.length; i++) {
             if(arrayToSort[i].hits < lowestHits.hits) {
@@ -15,7 +15,7 @@ var utils = {
         return lowestHits;
     },
     
-    sortByLowestStore: function(arrayToSort) {
+    getLowestStoreInArray: function(arrayToSort) {
         var lowestStore = arrayToSort[0];
         for(var i = 1; i < arrayToSort.length; i++) {
             if(arrayToSort[i].store.getUsedCapacity < lowestStore.store.getUsedCapacity) {

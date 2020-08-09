@@ -65,13 +65,13 @@ var roleHarvester = {
                 mineUntilFull.run(creep, sources[(sourceToMine + 1) % sources.length]);
             }
 		} else {
-			/* if(extension != null) {
+			if(extension != null) {
 				deliverToExtension.run(creep, extension);
-			} else if(tower != null) {
+			} /* else if(tower != null) {
 			    deliverToTower.run(creep, tower);
-			}
+			} */
 			
-			else */ if(Game.spawns['Spawn1'].store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
+			else if(Game.spawns['Spawn1'].store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
 				deliverToSpawn.run(creep);
 			}
 			

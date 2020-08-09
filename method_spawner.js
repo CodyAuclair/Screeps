@@ -80,7 +80,7 @@ var method_spawner = {
                 Game.spawns[name].spawnCreep(harvesterModules, 'Harvester'+(Math.floor(Math.random() * maxHarvesters)), {memory: {role: 'Harvester', storageFull: false}});
             }
             
-            else if(utility.canSpawnCreep(harvesterCount, maxHarvesters/2, harvesterBasicModules)) {
+            else if(utility.canSpawnCreep(harvesterCount, harvesterCount/2, harvesterBasicModules)) {
                 Game.spawns[name].spawnCreep(harvesterBasicModules, 'Harvester'+(Math.floor(Math.random() * maxHarvesters)), {memory: {role: 'Harvester', storageFull: false}});
             }
             

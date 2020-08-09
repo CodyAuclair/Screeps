@@ -2,6 +2,7 @@ var runRoles = require('method_runRoles');
 var spawner = require('method_spawner');
 
 module.exports.loop = function () {
+	// WORKING COPY TESTING
     console.log("entered main");
 	runRoles.run();
 	spawner.run();

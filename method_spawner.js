@@ -106,7 +106,7 @@ var method_spawner = {
             }
 
             else if(utility.canSpawnCreep(repairerCount, maxRepairers, repairerModules)) {
-                Game.spawns[name].spawnCreep(repairerModules, 'Repairer'+(Math.floor(Math.random() * maxSuppliers)), {memory: {role: 'Repairer', storageFull: false}});
+                Game.spawns[name].spawnCreep(repairerModules, 'Repairer'+(Math.floor(Math.random() * maxRepairers)), {memory: {role: 'Repairer', storageFull: false}});
             }
             
             else if(utility.canSpawnCreep(supplierCount, maxSuppliers, supplierModules) && (Game.spawns["Spawn1"].room.storage)) {

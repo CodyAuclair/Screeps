@@ -6,17 +6,15 @@ var roleRepairer = {
 	run: function(creep) {
 	    var sources = creep.room.find(FIND_SOURCES);
         var emergencyRepair = creep.pos.findClosestByPath(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_ROAD || structure.structureType == STRUCTURE_SPAWN || 
-                                                                                                            structure.structureType == STRUCTURE_CONTAINER || structure.structureType == STRUCTURE_EXTENSION ||
-                                                                                                            structure.structureType == STRUCTURE_RAMPART) && structure.hits < .2*structure.hitsMax} } );
-        
+                                                                                                            structure.structureType == STRUCTURE_CONTAINER || structure.structureType == STRUCTURE_EXTENSION)
+                                                                                                            && structure.hits < .2*structure.hitsMax} } );
+
         var repairTargets = creep.pos.findClosestByPath(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_ROAD || structure.structureType == STRUCTURE_SPAWN || 
                                                                                                             structure.structureType == STRUCTURE_CONTAINER || structure.structureType == STRUCTURE_EXTENSION)
                                                                                                             && structure.hits < structure.hitsMax} } );        
 
         var repairWalls = creep.pos.findClosestByPath(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_WALL || structure.structureType == STRUCTURE_RAMPART)
-                                                                                                                && structure.hits < 1000000 /* .001*structure.hitsMax */} } );
-
-        console.log("repairTargets: " + repairTargets);
+                                                                                                                && structure.hits < .01*structure.hitsMax } } );
 
 	    if(creep.memory.storageFull == false) {
             var sourceToMine = parseInt(creep.name.charAt(creep.name.length - 1), 10) % sources.length;
@@ -25,7 +23,7 @@ var roleRepairer = {
             } else {
                 mineUntilFull.run(creep, sources[(sourceToMine + 1) % sources.length]);
             }
-        } else if(emergencyRepair != null && emergencyRepair.length > 0) {
+        } else if(emergencyRepair != null) {
             if(creep.repair(emergencyRepair) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(emergencyRepair);
             }
@@ -33,7 +31,7 @@ var roleRepairer = {
             if(creep.repair(repairTargets) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(repairTargets);
             }
-        } else if(repairWalls != null && repairWalls.length > 0) {
+        } else if(repairWalls != null) {
             if(creep.repair(repairWalls) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(repairWalls);
             }

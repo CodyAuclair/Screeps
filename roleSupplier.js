@@ -7,6 +7,7 @@
  * mod.thing == 'a thing'; // true
  */
  
+var roleHarvester = require('roleHarvester');
 var roleUpgrader = require('roleUpgrader');
 var roleBuilder = require('roleBuilder');
 var deliverToExtension = require('method_deliverToExtension');
@@ -25,8 +26,7 @@ var roleSupplier = {
 		var towersPartialFill = creep.room.find(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_TOWER) && structure.energy <= .75*structure.energyCapacity} } );
 		var extension = creep.pos.findClosestByPath(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_EXTENSION) && structure.energy < structure.energyCapacity} } );
 		
-		// changed here
-		var energyOnGround = creep.pos.findClosestByPath(FIND_DROPPED_RESOURCES, {filter: (resource) => {return ((resource.resourceType == RESOURCE_ENERGY) && (resource.amount >= 100))}});
+		var energyOnGround = creep.pos.findClosestByPath(FIND_DROPPED_RESOURCES, {filter: (resource) => {return (resource.resourceType == RESOURCE_ENERGY)}});
 		
 		if((creep.store.getUsedCapacity < .8*creep.store.getCapacity) && (energyOnGround != null)) {
 		    if(creep.store.getUsedCapacity < storageTarget.store.getFreeCapacity) {

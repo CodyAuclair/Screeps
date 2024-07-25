@@ -27,8 +27,8 @@ var roleSupplier = {
 		
 		var energyOnGround = creep.pos.findClosestByPath(FIND_DROPPED_RESOURCES, {filter: (resource) => {return ((resource.resourceType == RESOURCE_ENERGY) && (resource.amount >= 100))}});
 		
-		if((creep.store.getUsedCapacity() < .8 * creep.store.getCapacity()) && (energyOnGround != null)) {
-		    if(creep.store.getUsedCapacity() < storageTarget.store.getFreeCapacity()) {
+		if((creep.store.getUsedCapacity < .8*creep.store.getCapacity) && (energyOnGround != null)) {
+		    if(creep.store.getUsedCapacity < storageTarget.store.getFreeCapacity) {
 		        if(creep.transfer(storageTarget, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
 		            creep.moveTo(storageTarget);
 		        }

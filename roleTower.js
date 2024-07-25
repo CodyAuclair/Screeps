@@ -15,7 +15,8 @@ var roleTower = {
         var hostiles = tower.room.find(FIND_HOSTILE_CREEPS, {filter: (creeps) => {return ((creeps.owner.username != "Brokndremes") || (creeps.owner.username != "DickFuckPussySuck"))}});
         
         var emergencyRepair = Game.spawns['Spawn1'].room.find(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_ROAD || structure.structureType == STRUCTURE_SPAWN || 
-                            structure.structureType == STRUCTURE_CONTAINER || structure.structureType == STRUCTURE_EXTENSION) && structure.hits < .2*structure.hitsMax} } );
+                                                                                                            structure.structureType == STRUCTURE_CONTAINER || structure.structureType == STRUCTURE_EXTENSION ||
+                                                                                                            structure.structureType == STRUCTURE_RAMPART) && structure.hits < .2*structure.hitsMax} } );
         
         // var repairTargets = Game.spawns['Spawn1'].room.find(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_ROAD || structure.structureType == STRUCTURE_SPAWN || 
         //                                                                                                     structure.structureType == STRUCTURE_CONTAINER || structure.structureType == STRUCTURE_EXTENSION)
